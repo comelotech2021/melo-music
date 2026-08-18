@@ -1,0 +1,86 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global default-deny safety catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Admin authorization check (bootstrapped to user email cosmello13@gmail.com and admins collection)
+    function isAdmin() {
+      return isSignedIn() && (
+        (request.auth.token.email == 'cosmello13@gmail.com' && request.auth.token.email_verified == true) ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    // Validation for Booking Request
+    function isValidBooking(data) {
+      return data.name is string && data.name.size() > 0 && data.name.size() <= 100 &&
+             data.phone is string && data.phone.size() > 0 && data.phone.size() <= 30 &&
+             data.serviceType is string && data.serviceType.size() > 0 && data.serviceType.size() <= 50 &&
+             data.message is string && data.message.size() <= 2000;
+    }
+
+    // Tracks Collection
+    match /tracks/{trackId} {
+      allow read: if true;
+      allow create, delete: if isValidId(trackId) && isAdmin();
+      allow update: if isValidId(trackId) && (
+        isAdmin() || 
+        (
+          incoming().diff(existing()).affectedKeys().hasOnly(['playCount', 'downloadCount']) &&
+          incoming().playCount is number &&
+          incoming().downloadCount is number
+        )
+      );
+    }
+
+    // News & Magazine Collection
+    match /news/{articleId} {
+      allow read: if true;
+      allow write: if isValidId(articleId) && isAdmin();
+    }
+
+    // Studio Events & Agenda Collection
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if isValidId(eventId) && isAdmin();
+    }
+
+    // Artist Booking Inquiries (Public write with validation, Admin read/manage)
+    match /bookings/{bookingId} {
+      allow create: if isValidId(bookingId) && isValidBooking(incoming());
+      allow read, update, delete: if isValidId(bookingId) && isAdmin();
+    }
+
+    // Studio Config / Settings
+    match /studio/{configId} {
+      allow read: if true;
+      allow write: if isValidId(configId) && isAdmin();
+    }
+
+    // Admins Collection
+    match /admins/{adminUid} {
+      allow read, write: if isValidId(adminUid) && isAdmin();
+    }
+  }
+}

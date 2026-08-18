@@ -1,0 +1,6 @@
+{
+  "name": "MELO MUSIC-studio",
+  "description": "Plataforma oficial do estúdio MELO MUSIC-studio com catálogo musical por ritmos (Kizomba, Kuduro, Semba, Afro House, Hip-Hop), download direto de MP3, letras, ficha técnica, revista de novidades, agenda de eventos, galeria do YouTube e painel de administração restrito.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

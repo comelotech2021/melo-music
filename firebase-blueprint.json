@@ -1,0 +1,307 @@
+{
+  "entities": {
+    "Track": {
+      "title": "Track",
+      "description": "A musical track produced or hosted by MELO MUSIC-studio",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 150,
+          "description": "Track title"
+        },
+        "artist": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "Primary artist"
+        },
+        "featuredArtists": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Featured artists"
+        },
+        "genre": {
+          "type": "string",
+          "enum": ["Kizomba", "Kuduro", "Semba", "Afro House", "Hip-Hop/Trap", "Outros"],
+          "description": "Musical style/genre"
+        },
+        "coverUrl": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Cover art image URL"
+        },
+        "audioUrl": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Audio stream or MP3 URL"
+        },
+        "releaseDate": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Release date string"
+        },
+        "duration": {
+          "type": "string",
+          "maxLength": 20,
+          "description": "Track duration"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "Track description"
+        },
+        "lyrics": {
+          "type": "string",
+          "maxLength": 10000,
+          "description": "Full track lyrics"
+        },
+        "downloadAvailable": {
+          "type": "boolean",
+          "description": "Whether MP3 direct download is available"
+        },
+        "downloadUrl": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Direct download URL"
+        },
+        "featured": {
+          "type": "boolean",
+          "description": "Featured track flag"
+        },
+        "playCount": {
+          "type": "number",
+          "description": "Total plays count"
+        },
+        "downloadCount": {
+          "type": "number",
+          "description": "Total downloads count"
+        },
+        "bpm": {
+          "type": "number",
+          "description": "Beats per minute"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last updated timestamp"
+        }
+      },
+      "required": ["title", "artist", "genre", "coverUrl", "audioUrl"]
+    },
+    "NewsArticle": {
+      "title": "NewsArticle",
+      "description": "A blog or magazine news article published by MELO MUSIC-studio",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "description": "Article headline"
+        },
+        "slug": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "URL slug"
+        },
+        "category": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Article category"
+        },
+        "coverUrl": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Cover image URL"
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Brief summary"
+        },
+        "content": {
+          "type": "string",
+          "maxLength": 20000,
+          "description": "Full article body"
+        },
+        "publishDate": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Publish date"
+        },
+        "author": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Author name"
+        },
+        "readTimeMinutes": {
+          "type": "number",
+          "description": "Estimated reading time"
+        }
+      },
+      "required": ["title", "category", "coverUrl", "summary", "content", "author"]
+    },
+    "ActivityEvent": {
+      "title": "ActivityEvent",
+      "description": "A scheduled studio session, live showcase, or music release event",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 150,
+          "description": "Event title"
+        },
+        "type": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Event type"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PRÓXIMO", "CONFIRMADO", "EM BREVE", "REALIZADO"],
+          "description": "Event status"
+        },
+        "date": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Event date"
+        },
+        "time": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Event time"
+        },
+        "location": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Event location"
+        },
+        "coverUrl": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Cover URL"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "Event description"
+        },
+        "link": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Optional action link"
+        },
+        "linkLabel": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Label for action link"
+        }
+      },
+      "required": ["title", "type", "status", "date", "time", "location", "description"]
+    },
+    "BookingRequest": {
+      "title": "BookingRequest",
+      "description": "Studio recording or mixing session inquiry submitted by an artist or producer",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "Artist/Client name"
+        },
+        "phone": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 30,
+          "description": "Contact phone or WhatsApp"
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Contact email"
+        },
+        "serviceType": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Requested studio service"
+        },
+        "preferredDate": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Preferred recording date"
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "Session details or message"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PENDING", "CONFIRMED", "COMPLETED", "CANCELLED"],
+          "description": "Booking status"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Submission timestamp"
+        }
+      },
+      "required": ["name", "phone", "serviceType", "message"]
+    },
+    "StudioConfig": {
+      "title": "StudioConfig",
+      "description": "Master studio information and contacts",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Studio name"
+        },
+        "slogan": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Studio slogan"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "Studio description"
+        },
+        "foundedYear": {
+          "type": "string",
+          "maxLength": 10,
+          "description": "Founded year"
+        }
+      }
+    }
+  },
+  "firestore": {
+    "/tracks/{trackId}": {
+      "schema": { "$ref": "entities/Track" },
+      "description": "Public music catalogue with lyrics, credits and play/download counts"
+    },
+    "/news/{articleId}": {
+      "schema": { "$ref": "entities/NewsArticle" },
+      "description": "Studio magazine news and blog articles"
+    },
+    "/events/{eventId}": {
+      "schema": { "$ref": "entities/ActivityEvent" },
+      "description": "Studio schedule, concerts and live sessions"
+    },
+    "/bookings/{bookingId}": {
+      "schema": { "$ref": "entities/BookingRequest" },
+      "description": "Artist session booking requests"
+    },
+    "/studio/settings": {
+      "schema": { "$ref": "entities/StudioConfig" },
+      "description": "Studio settings and configuration"
+    },
+    "/admins/{adminUid}": {
+      "schema": { "$ref": "entities/StudioConfig" },
+      "description": "Admin users list"
+    }
+  }
+}
